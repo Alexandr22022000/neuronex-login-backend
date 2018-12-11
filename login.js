@@ -7,21 +7,24 @@ const FirebaseTokenGenerator = require('firebase-token-generator'),
 module.exports = (login, password) => {
     update();
 
-    const res = config.checkUser(login, password);
+    return new Promise((resolve, reject) => {
+        config.checkUser(login, password)
+            .then((res) => {
+                if (!res.isUser) return resolve(null);
 
-    if (!res.isUser) return null;
+                const token = tokenGenerator.createToken({
+                    uid: config.tokenUid,
+                    some: config.tokenData,
+                    data: new Date().getTime()
+                });
 
-    const token = tokenGenerator.createToken({
-        uid: config.tokenUid,
-        some: config.tokenData,
-        data: new Date().getTime()
+                store.users.push({
+                    token,
+                    data: res.data,
+                    date: new Date().getTime(),
+                });
+
+                resolve(token);
+            });
     });
-
-    store.users.push({
-        token,
-        data: res.data,
-        date: new Date().getTime(),
-    });
-
-    return token;
 };
