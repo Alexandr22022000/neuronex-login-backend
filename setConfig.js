@@ -8,5 +8,4 @@ module.exports = (checkUser, tokenSecret, tokenData, tokenUid, timer, userStop) 
     if (tokenData !== undefined) config.tokenData = tokenData;
     if (tokenUid !== undefined) config.tokenUid = tokenUid;
     if (userStop !== undefined) config.userStop = userStop;
-    if (userStop !== undefined) config.userStop = userStop;
 };
