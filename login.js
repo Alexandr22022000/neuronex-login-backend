@@ -24,7 +24,7 @@ module.exports = (login, password) => {
                     date: new Date().getTime(),
                 });
 
-                resolve(token);
+                resolve(token, res.data);
             });
     });
 };
